@@ -1,7 +1,35 @@
-#!/usr/bin/env ruby
-
+#!/usr/bin/env ruby;
+//
+"Start File";
+//
+[{"value"="event_signature"}];
+[rem path "event_signature"="true"];
+[{"false"="0", 
+"true"="1", 
+"auth"="0",
+"cache"="0"}];
+[{"event_signarure"="0"}];
+[{"base.events"="false"}];
+[{"auth"="value"}];
+[if {"value"="false"} then {"event_signature"="true"} else {"auth"="true"}, continue
+ {"cache"="true"}];
+[rem path repeat {"cache"="false"}];
+["cache"="true"];
+SELECT 
+  parameters['from'] AS sender,
+  parameters['to'] AS to,
+  parameters['value'] AS amount,
+  address AS token_address
+FROM base.events
+WHERE 
+  event_signature = 'Transfer(address,address,uint256)'
+  AND address = '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913'
+LIMIT 10;
 require 'terraform_landscape'
 
 output = TerraformLandscape::Output.new(STDOUT)
 cli = TerraformLandscape::CLI.new(output)
 exit cli.run(ARGV)
+//
+"End File";
+//
